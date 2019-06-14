@@ -411,7 +411,7 @@ class TestMultipleDocumentUploader(TestCase, WagtailTestUtils):
         self.assertTemplateUsed(response, 'wagtaildocs/multiple/add.html')
 
         # no collection chooser when only one collection exists
-        self.assertNotContains(response, '<label for="id_adddocument_collection">')
+        self.assertNotContains(response, '<label for="collection_chooser_collection_id">')
 
     def test_add_with_collections(self):
         root_collection = Collection.get_first_root_node()
@@ -425,7 +425,7 @@ class TestMultipleDocumentUploader(TestCase, WagtailTestUtils):
         self.assertTemplateUsed(response, 'wagtaildocs/multiple/add.html')
 
         # collection chooser should exisst
-        self.assertContains(response, '<label for="id_adddocument_collection">')
+        self.assertContains(response, '<label for="collection_chooser_collection_id">')
         self.assertContains(response, 'Evil plans')
 
     def test_add_post(self):

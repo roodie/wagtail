@@ -115,6 +115,27 @@ class AdminTagWidget(TagWidget):
         return context
 
 
+class AdminCollectionWidget(widgets.Select):
+    template_name = 'wagtailadmin/widgets/collection_widget.html'
+
+    def __init__(self, *args, show_all_collections=False, **kwargs):
+        """
+        Accepted params:
+        show_all_collections
+            Whether or not "All collections" should be one of the options.
+        """
+        super().__init__(*args, **kwargs)
+        self.show_all_collections = show_all_collections
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context.update({
+            'collections': self.choices.queryset,
+            'show_all_collections': self.show_all_collections,
+        })
+        return context
+
+
 class AdminChooser(WidgetWithScript, widgets.Input):
     input_type = 'hidden'
     choose_one_text = _("Choose an item")
@@ -286,6 +307,9 @@ class PageListingButton(Button):
         classes = {'button', 'button-small', 'button-secondary'} | set(classes)
         super().__init__(label, url, classes=classes, **kwargs)
 
+
+class CollectionListingButton(PageListingButton):
+    pass
 
 class BaseDropdownMenuButton(Button):
     def __init__(self, *args, **kwargs):

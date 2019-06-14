@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<nav aria-label="{% trans 'Breadcrumb' %}">
+    <ul class="breadcrumb">
+        {% for collection in collections %}
+            {% if forloop.first %}
+                {# first item in breadcrumb displays as a 'home' icon in place of the title #}
+                <li class="home"><a href="{% if collection.is_root %}{% url 'wagtailadmin_collections:index' %}{% else %}{% url 'wagtailadmin_collections:parent_index' collection.id %}{% endif %}" class="icon icon-site text-replace">{% trans 'Root' %}</a></li>
+            {% else %}
+                <li><a href="{% url 'wagtailadmin_collections:parent_index' collection.id %}">{{ collection.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
